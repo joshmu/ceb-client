@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import useCebData from './hooks/useCebData'
+import Details from './components/details'
 
 function App() {
+  const logs = useCebData()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div>
+        <h1>CEB</h1>
+        {logs ? (
+          <div>
+            <Details logs={logs} />
+            <h2>Data</h2>
+            <pre>{JSON.stringify(logs, null, 4)}</pre>
+          </div>
+        ) : (
+          <p>
+            Fetching data... <em>20-30 seconds...</em>
+          </p>
+        )}
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
