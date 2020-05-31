@@ -14,12 +14,10 @@ function App() {
           <div>
             <Details logs={logs} />
             <h2>Data</h2>
-            <pre>{JSON.stringify(logs, null, 4)}</pre>
+            <pre>{JSON.stringify(logs.slice(-10), null, 4)}</pre>
           </div>
         ) : (
-          <p>
-            Fetching data... <em>20-30 seconds...</em>
-          </p>
+          <p>Fetching data...</p>
         )}
       </div>
     </div>

@@ -7,7 +7,7 @@ export const useCebData = () => {
     console.log('fetching db data...')
     fetch('https://mu-ceb-api.herokuapp.com')
       .then((res) => res.json())
-      .then((json) => setLogs(json))
+      .then((data) => setLogs(data))
       .catch((err) => console.error(err))
   }, [])
 
