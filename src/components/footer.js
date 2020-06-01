@@ -6,7 +6,11 @@ const Footer = () => {
     <footer>
       <p>
         <span className='footer-mu'>
-          <a href='https://hello.joshmu.com' target='_blank'>
+          <a
+            href='https://hello.joshmu.com'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             MU
           </a>
         </span>

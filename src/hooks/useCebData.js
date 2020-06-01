@@ -13,7 +13,8 @@ export const useCebData = () => {
         .catch((err) => console.error(err))
     } else {
       // this does not exist on production server
-      const db = require('../temp/database.json')
+      // const db = require('../temp/database.json')
+      const db = []
       console.log('using mock data...')
       setLogs(db)
     }
