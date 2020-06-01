@@ -1,25 +1,18 @@
 import React from 'react'
-import './App.css'
+import './App.scss'
 import useCebData from './hooks/useCebData'
-import Details from './components/details'
+import Header from './components/header'
+import Footer from './components/footer'
+import Main from './components/main'
 
 function App() {
   const logs = useCebData()
 
   return (
     <div className='App'>
-      <div>
-        <h1>CEB</h1>
-        {logs ? (
-          <div>
-            <Details logs={logs} />
-            <h2>Data</h2>
-            <pre>{JSON.stringify(logs.slice(-10), null, 4)}</pre>
-          </div>
-        ) : (
-          <p>Fetching data...</p>
-        )}
-      </div>
+      <Header />
+      {logs ? <Main logs={logs} /> : <p>Fetching data...</p>}
+      <Footer />
     </div>
   )
 }

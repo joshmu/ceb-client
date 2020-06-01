@@ -1,0 +1,132 @@
+$darkPrimaryColor: #1976d2;
+$lightPrimaryColor: #bbdefb;
+$primaryColor: #2196f3;
+$textIcons: #ffffff;
+$accent: #009688;
+$primaryText: #212121;
+$secondaryText: #757575;
+$dividerColor: #bdbdbd;
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: $textIcons;
+}
+
+.navbar {
+  background: $darkPrimaryColor;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+
+  .logo {
+    a {
+      color: $textIcons;
+      h1 {
+        margin: 0;
+        letter-spacing: 0.25rem;
+        font-weight: 300;
+        span {
+          font-weight: 400;
+        }
+      }
+    }
+  }
+  nav {
+    ul {
+      list-style: none;
+      display: flex;
+      li {
+        padding: 0 1rem;
+        a {
+          color: $textIcons;
+        }
+      }
+    }
+  }
+}
+
+main {
+  color: $primaryText;
+  display: flex;
+  flex-direction: column;
+  .content {
+    width: 100%;
+    .info {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+      .card {
+        flex: 1;
+        margin: 0.5rem;
+        padding: 1rem;
+        min-height: 10rem;
+        min-width: 30%;
+        background-color: $lightPrimaryColor;
+        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .balance {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 2rem;
+          font-weight: 700;
+          .symbol {
+            font-size: 3rem;
+          }
+          .amount {
+            font-weight: 400;
+          }
+          .asset {
+            text-transform: uppercase;
+            margin-left: 0.25rem;
+            font-size: 1rem;
+            // display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+footer {
+  background-color: $darkPrimaryColor;
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+  p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 2px;
+    .footer-mu {
+      font-weight: 700;
+      a {
+        color: $textIcons;
+      }
+    }
+    .footer-icon {
+      margin: 0 0.2rem;
+    }
+    .footer-reserved {
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
