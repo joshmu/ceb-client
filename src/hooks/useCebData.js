@@ -6,18 +6,15 @@ export const useCebData = () => {
     // get the data
     console.log('fetching db data...')
 
-    if (process.env.NETLIFY) {
-      fetch('https://mu-ceb-api.herokuapp.com')
-        .then((res) => res.json())
-        .then((data) => setLogs(data))
-        .catch((err) => console.error(err))
-    } else {
-      // this does not exist on production server
-      // const db = require('../temp/database.json')
-      const db = []
-      console.log('using mock data...')
-      setLogs(db)
-    }
+    fetch('https://mu-ceb-api.herokuapp.com')
+      .then((res) => res.json())
+      .then((data) => setLogs(data))
+      .catch((err) => console.error(err))
+
+    // this does not exist on production server
+    // const db = require('../temp/database.json')
+    // console.log('using mock data...')
+    // setLogs(db)
   }, [])
 
   return logs

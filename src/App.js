@@ -11,7 +11,11 @@ function App() {
   return (
     <div className='App'>
       <Header />
-      {logs ? <Main logs={logs} /> : <p>Fetching data...</p>}
+      {logs ? (
+        <Main logs={logs} />
+      ) : (
+        <p className='loading'>Fetching data...</p>
+      )}
       <Footer />
     </div>
   )
