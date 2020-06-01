@@ -1,23 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-export const useCebData = () => {
-  const [logs, setLogs] = useState(null)
-  useEffect(() => {
-    // get the data
-    console.log('fetching db data...')
+const useCebData = () => {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState([])
+  const [error, setError] = useState([])
 
-    fetch('https://mu-ceb-api.herokuapp.com')
-      .then((res) => res.json())
-      .then((data) => setLogs(data))
-      .catch((err) => console.error(err))
+  const init = () => {
+    setData(null)
+    setLoading(true)
+    setError(false)
+  }
 
-    // this does not exist on production server
-    // const db = require('../temp/database.json')
-    // console.log('using mock data...')
-    // setLogs(db)
-  }, [])
+  const fetch = async () => {
+    init()
+    setLoading(true)
+    try {
+      // const res = await fetch('https://mu-ceb-api.herokuapp.com')
+      // const data = await res.json()
+      // console.log(data)
+      // setData(data)
+      // this does not exist on production server
+      const db = require('../temp/database.json')
+      console.log('using mock data...')
+      setData(db)
+    } catch (e) {
+      setError(true)
+    }
+    setLoading(false)
+  }
 
-  return logs
+  return { data, loading, error, fetch }
 }
 
 export default useCebData

@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Details from './details'
 
-const Main = ({ logs }) => {
+import { globalContext } from '../context/globalContext'
+
+const Main = () => {
+  const { logs } = useContext(globalContext)
+
   return (
     <main>
       <div className='content'>
-        <Details logs={logs} />
-        <pre>{JSON.stringify(logs.slice(-10), null, 4)}</pre>
+        {logs ? (
+          <>
+            <Details />
+            <pre>{JSON.stringify(logs.slice(-10), null, 4)}</pre>
+          </>
+        ) : (
+          <p className='loading'>Fetching data...</p>
+        )}
       </div>
     </main>
   )

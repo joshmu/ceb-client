@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import CryptoIcon from './cryptoIcon'
+import { globalContext } from '../context/globalContext'
 
-const Details = ({ logs }) => {
+const Details = () => {
+  const { logs } = useContext(globalContext)
+
   const latest = logs[logs.length - 1]
   latest.balances.usd = latest.balances.usd < 1 ? '0.00' : latest.balances.usd
   const durationDays = +(
@@ -16,11 +19,13 @@ const Details = ({ logs }) => {
   return (
     <div className='info'>
       {Object.entries(latest.balances).map(([key, val]) => (
-        <div className='card'>
+        <div className='card' key={key}>
           <div className='balance'>
             <CryptoIcon className='symbol' assetName={key} />
-            <span className='amount'>{val}</span>
-            <span className='asset'>{key}</span>
+            <span className='amount-wrapper'>
+              <span className='amount'>{val}</span>
+              <span className='asset'>{key}</span>
+            </span>
           </div>
         </div>
       ))}

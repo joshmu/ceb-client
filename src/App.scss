@@ -85,14 +85,14 @@ main {
           .symbol {
             font-size: 3rem;
           }
-          .amount {
+          .amount-wrapper {
             font-weight: 400;
-          }
-          .asset {
-            text-transform: uppercase;
-            margin-left: 0.25rem;
-            font-size: 1rem;
-            // display: none;
+            .asset {
+              text-transform: uppercase;
+              margin-left: 0.25rem;
+              font-size: 1rem;
+              // display: none;
+            }
           }
         }
       }

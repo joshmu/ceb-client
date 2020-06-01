@@ -1,23 +1,20 @@
 import React from 'react'
 import './App.scss'
-import useCebData from './hooks/useCebData'
 import Header from './components/header'
 import Footer from './components/footer'
 import Main from './components/main'
 
-function App() {
-  const logs = useCebData()
+import GlobalProvider from './context/globalContext'
 
+function App() {
   return (
-    <div className='App'>
-      <Header />
-      {logs ? (
-        <Main logs={logs} />
-      ) : (
-        <p className='loading'>Fetching data...</p>
-      )}
-      <Footer />
-    </div>
+    <GlobalProvider>
+      <div className='App'>
+        <Header />
+        <Main />
+        <Footer />
+      </div>
+    </GlobalProvider>
   )
 }
 
