@@ -6,19 +6,19 @@ const globalContext = createContext(defaultState)
 
 const GlobalProvider = ({ children }) => {
   const [logs, setLogs] = useState(null)
-  const { data, fetch } = useCebData()
+  const { fetchData, loading } = useCebData()
 
   // lets only get the api data once and store in state
   useEffect(() => {
-    if (!data) {
-      fetch()
-    } else if (!logs && data) {
-      setLogs(data)
-    }
-  }, [data, fetch, logs])
+    // console.log('global provider: useEffect')
+    fetchData().then((data) => setLogs(data))
+    // eslint-disable-next-line
+  }, [])
 
   return (
-    <globalContext.Provider value={{ logs }}>{children}</globalContext.Provider>
+    <globalContext.Provider value={{ logs, loading }}>
+      {children}
+    </globalContext.Provider>
   )
 }
 

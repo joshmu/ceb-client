@@ -9,6 +9,12 @@ const CryptoIcon = ({ assetName, ...props }) => {
       return <FaEthereum {...props} />
     case 'usd':
       return <FaDollarSign {...props} />
+    case 'ethbtc':
+      return <FaBtc {...props} />
+    case 'btcusd':
+      return <FaDollarSign {...props} />
+    case 'ethusd':
+      return <FaDollarSign {...props} />
     default:
       return <div {...props}></div>
   }

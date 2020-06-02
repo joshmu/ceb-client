@@ -5,8 +5,19 @@ import { globalContext } from '../context/globalContext'
 const Details = () => {
   const { logs } = useContext(globalContext)
 
+  // parse the data
+  const tickerNames = ['btcusd', 'ethbtc', 'ethusd']
+
   const latest = logs[logs.length - 1]
+
+  // wallet
   latest.balances.usd = latest.balances.usd < 1 ? '0.00' : latest.balances.usd
+  const wallet = Object.entries(latest.balances)
+
+  // prices
+  const prices = tickerNames.map((tn) => [tn, latest[tn].ticker.mid])
+
+  // facts
   const durationDays = +(
     (latest.appTimestamp - logs[0].appTimestamp) /
     1000 /
@@ -15,10 +26,16 @@ const Details = () => {
     24
   ).toFixed(1)
   const orders = logs.filter((l) => l.order)
+  const facts = [
+    ['days', durationDays],
+    ['trades', orders.length],
+    ['entries', logs.length],
+  ]
 
   return (
     <div className='info'>
-      {Object.entries(latest.balances).map(([key, val]) => (
+      <h2 style={{ minWidth: '100%', textAlign: 'center' }}>Wallet</h2>
+      {wallet.map(([key, val]) => (
         <div className='card' key={key}>
           <div className='balance'>
             <CryptoIcon className='symbol' assetName={key} />
@@ -29,15 +46,30 @@ const Details = () => {
           </div>
         </div>
       ))}
-      <div className='card'>
-        <p>{orders.length} orders</p>
-      </div>
-      <div className='card'>
-        <p>{logs.length} logs</p>
-      </div>
-      <div className='card'>
-        <p>{durationDays} days</p>
-      </div>
+      <h2 style={{ minWidth: '100%', textAlign: 'center' }}>Prices</h2>
+      {prices.map(([key, val]) => (
+        <div className='card' key={key}>
+          <div className='balance'>
+            <CryptoIcon className='symbol' assetName={key} />
+            <span className='amount-wrapper'>
+              <span className='amount'>{val}</span>
+              <span className='asset'>{key}</span>
+            </span>
+          </div>
+        </div>
+      ))}
+      <h2 style={{ minWidth: '100%', textAlign: 'center' }}>Facts</h2>
+      {facts.map(([key, val]) => (
+        <div className='card' key={key}>
+          <div className='balance'>
+            <CryptoIcon className='symbol' assetName={key} />
+            <span className='amount-wrapper'>
+              <span className='amount'>{val}</span>
+              <span className='asset'>{key}</span>
+            </span>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

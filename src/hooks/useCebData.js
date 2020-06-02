@@ -1,35 +1,31 @@
 import { useState } from 'react'
 
 const useCebData = () => {
-  const [data, setData] = useState(null)
+  // will store data in context rather than hook
   const [loading, setLoading] = useState([])
   const [error, setError] = useState([])
 
   const init = () => {
-    setData(null)
     setLoading(true)
     setError(false)
   }
 
-  const fetch = async () => {
+  const fetchData = async () => {
     init()
-    setLoading(true)
-    try {
-      // const res = await fetch('https://mu-ceb-api.herokuapp.com')
-      // const data = await res.json()
-      // console.log(data)
-      // setData(data)
-      // this does not exist on production server
-      const db = require('../temp/database.json')
-      console.log('using mock data...')
-      setData(db)
-    } catch (e) {
+    const res = await fetch('https://mu-ceb-api.herokuapp.com').catch((e) =>
       setError(true)
-    }
+    )
+    const data = await res.json().catch((e) => setError(e))
+
+    // this does not exist on production server
+    // const data = require('../temp/database.json')
+    // console.log('using mock data...')
+
     setLoading(false)
+    return data
   }
 
-  return { data, loading, error, fetch }
+  return { loading, error, fetchData }
 }
 
 export default useCebData

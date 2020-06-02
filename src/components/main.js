@@ -4,19 +4,18 @@ import Details from './details'
 import { globalContext } from '../context/globalContext'
 
 const Main = () => {
-  const { logs } = useContext(globalContext)
+  const { logs, loading } = useContext(globalContext)
 
   return (
     <main>
       <div className='content'>
-        {logs ? (
+        {logs && (
           <>
             <Details />
-            <pre>{JSON.stringify(logs.slice(-10), null, 4)}</pre>
+            {/* <pre>{JSON.stringify(logs.slice(-10), null, 4)}</pre> */}
           </>
-        ) : (
-          <p className='loading'>Fetching data...</p>
         )}
+        {loading && <p className='loading'>Fetching data...</p>}
       </div>
     </main>
   )
