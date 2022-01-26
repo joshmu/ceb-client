@@ -1,10 +1,6 @@
-import React, { useContext } from 'react'
 import CryptoIcon from './cryptoIcon'
-import { globalContext } from '../context/globalContext'
 
-const Details = () => {
-  const { logs } = useContext(globalContext)
-
+export const Details = ({ logs }) => {
   // parse the data
   const tickerNames = ['btcusd', 'ethbtc', 'ethusd']
 
@@ -15,7 +11,7 @@ const Details = () => {
   const wallet = Object.entries(latest.balances)
 
   // prices
-  const prices = tickerNames.map((tn) => [tn, latest[tn].ticker.mid])
+  const prices = tickerNames.map(tn => [tn, latest[tn].ticker.mid])
 
   // facts
   const durationDays = +(
@@ -25,7 +21,7 @@ const Details = () => {
     60 /
     24
   ).toFixed(1)
-  const orders = logs.filter((l) => l.order)
+  const orders = logs.filter(l => l.order)
   const facts = [
     ['days', durationDays],
     ['trades', orders.length],
@@ -73,5 +69,3 @@ const Details = () => {
     </div>
   )
 }
-
-export default Details

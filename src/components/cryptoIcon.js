@@ -1,4 +1,3 @@
-import React from 'react'
 import { FaBtc, FaEthereum, FaDollarSign } from 'react-icons/fa'
 
 const CryptoIcon = ({ assetName, ...props }) => {
