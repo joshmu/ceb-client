@@ -9,7 +9,13 @@ const Home: NextPage = () => {
   const { data, error, isLoading } = useCebData()
 
   if (isLoading) return <p>Loading...</p>
-  if (error) return <pre>{JSON.stringify(error, null, 2)}</pre>
+  if (error)
+    return (
+      <>
+        <h1>ERROR!</h1>
+        <pre>{JSON.stringify(error, null, 2)}</pre>
+      </>
+    )
   // if (data) return <pre>{JSON.stringify(data, null, 2)}</pre>
 
   return (
