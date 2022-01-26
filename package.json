@@ -1,5 +1,5 @@
 {
-  "name": "ceb-fe",
+  "name": "ceb-client",
   "private": true,
   "scripts": {
     "dev": "next dev",
