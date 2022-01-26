@@ -1,7 +1,7 @@
 $darkPrimaryColor: #1976d2;
 $lightPrimaryColor: #bbdefb;
 $primaryColor: #2196f3;
-$textIcons: #ffffff;
+$textIcons: #fff;
 $accent: #009688;
 $primaryText: #212121;
 $secondaryText: #757575;
@@ -21,28 +21,33 @@ $dividerColor: #bdbdbd;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 2rem;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 50%);
   text-transform: uppercase;
 
   .logo {
     a {
       color: $textIcons;
+
       h1 {
         margin: 0;
         letter-spacing: 0.25rem;
         font-weight: 300;
+
         span {
           font-weight: 400;
         }
       }
     }
   }
+
   nav {
     ul {
       list-style: none;
       display: flex;
+
       li {
         padding: 0 1rem;
+
         a {
           color: $textIcons;
         }
@@ -56,8 +61,10 @@ main {
   display: flex;
   flex-direction: column;
   margin: 1rem 0;
+
   .content {
     width: 100%;
+
     .info {
       width: 100%;
       display: flex;
@@ -65,6 +72,7 @@ main {
       align-items: center;
       flex-wrap: wrap;
       margin: 2rem 0;
+
       .card {
         flex: 1;
         margin: 0.5rem;
@@ -72,25 +80,30 @@ main {
         min-height: 10rem;
         min-width: 30%;
         background-color: $lightPrimaryColor;
-        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+        box-shadow: 1px 2px 5px rgb(0 0 0 / 50%);
         display: flex;
         justify-content: center;
         align-items: center;
+
         .balance {
           display: flex;
           justify-content: center;
           align-items: center;
           font-size: 2rem;
           font-weight: 700;
+
           .symbol {
             font-size: 3rem;
           }
+
           .amount-wrapper {
             font-weight: 400;
+
             .asset {
               text-transform: uppercase;
               margin-left: 0.25rem;
               font-size: 1rem;
+
               // display: none;
             }
           }
@@ -103,20 +116,25 @@ main {
 footer {
   background-color: $darkPrimaryColor;
   padding: 0.5rem 0;
+
   p {
     display: flex;
     justify-content: center;
     align-items: center;
     letter-spacing: 2px;
+
     .footer-mu {
       font-weight: 700;
+
       a {
         color: $textIcons;
       }
     }
+
     .footer-icon {
       margin: 0 0.2rem;
     }
+
     .footer-reserved {
     }
   }
