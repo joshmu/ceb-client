@@ -14,7 +14,7 @@ async function connect() {
   }
 }
 
-async function getTrimmedLogs(filter) {
+async function getTrimmedLogs() {
   log('getTrimmedLogs')
   let logs = await Logs.find(
     { balances: { $exists: true } },
@@ -33,12 +33,6 @@ async function getTrimmedLogs(filter) {
     .sort({ appTimestamp: 'asc' })
     .lean()
 
-  // optional way to filter results further
-  if (filter) {
-    logs = logs.filter(filter)
-  } else {
-    logs = logs.filter((log, idx) => idx % 2 === 0)
-  }
   return logs
 }
 
