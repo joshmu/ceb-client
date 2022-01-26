@@ -14,9 +14,9 @@ async function connect() {
   }
 }
 
-async function getTrimmedLogs() {
-  console.log('db.getTrimmedLogs')
-  return Logs.find(
+async function getTrimmedLogs(filter) {
+  log('getTrimmedLogs')
+  let logs = await Logs.find(
     { balances: { $exists: true } },
     {
       'btcusd.signals.daily': 1,
@@ -32,6 +32,14 @@ async function getTrimmedLogs() {
   )
     .sort({ appTimestamp: 'asc' })
     .lean()
+
+  // optional way to filter results further
+  if (filter) {
+    logs = logs.filter(filter)
+  } else {
+    logs = logs.filter((log, idx) => idx % 2 === 0)
+  }
+  return logs
 }
 
 export { connect, getTrimmedLogs }
