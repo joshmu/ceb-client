@@ -32,7 +32,7 @@ export const Details = ({ logs }) => {
     <div className='info'>
       <h2 style={{ minWidth: '100%', textAlign: 'center' }}>Wallet</h2>
       {wallet.map(([key, val]) => (
-        <div className='card' key={key}>
+        <div className='card' key={key} style={{ fontSize: '2rem' }}>
           <div className='balance'>
             <CryptoIcon className='symbol' assetName={key} />
             <span className='amount-wrapper'>

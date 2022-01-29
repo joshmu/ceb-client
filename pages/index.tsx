@@ -3,43 +3,27 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { Details } from '../src/components/details'
-import { LogType } from '../src/types/d'
-
-const dev = process.env.NODE_ENV !== 'production'
-let server = dev ? 'http://localhost:3000' : 'https://ceb-client.vercel.app'
+import { InfoResponseType } from './api/info'
+import { getOriginServer } from '../src/utils/getOriginServer'
+import { IncomingMessage } from 'http'
+import { useCryptoLogs } from '../src/hooks/useCryptoLogs'
 
 export async function getServerSideProps(context: NextPageContext) {
   const { req } = context
-  // * using 'x-forwarded-host' since lambda can run on a different port
-  if (req && !dev) server = `https://${req.headers['x-forwarded-host']}`
 
-  const props = {} as { logs: LogType[]; error: Error | unknown }
+  const server = getOriginServer(req as IncomingMessage)
+
+  let props: InfoResponseType | any = {}
 
   try {
     // get num of pages required
     const infoRes = await fetch(`${server}/api/info`)
-    const { pages, count } = await infoRes.json()
-    console.log('total records:', count)
+    const data = (await infoRes.json()) as InfoResponseType
 
-    // fire request per page to reduce lambda download size
-    const responses = await Promise.all(
-      Array(pages)
-        .fill(undefined)
-        .map(async (_, page: number) => {
-          return fetch(`${server}/api/page`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ page: page + 1, limit: 10000 }),
-          }).then(res => res.json())
-        })
-    )
-
-    // consolidate data
-    const data = responses.flat()
-    props.logs = data
+    props = data
   } catch (err) {
     console.error(err)
-    props.error = err
+    props.error = { ...props, err }
   }
 
   return {
@@ -47,17 +31,27 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 }
 
-const Home: NextPage<{ logs: LogType[]; error?: Error | unknown }> = ({
-  logs,
-  error,
-}) => {
-  if (error)
+const Home: NextPage<{
+  totalRecords: number
+  totalPages: number
+  error?: Error | unknown
+}> = ({ totalRecords, totalPages, error }) => {
+  const { logs, isLoading, errors } = useCryptoLogs({ totalPages })
+
+  if (errors?.length) {
     return (
       <>
         <h1>ERROR!</h1>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
+        {errors.map((err, idx) => (
+          <pre key={idx}>{JSON.stringify(error, null, 2)}</pre>
+        ))}
       </>
     )
+  }
+
+  if (isLoading) {
+    return <h1>Loading...</h1>
+  }
 
   return (
     <div className={styles.container}>

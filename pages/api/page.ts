@@ -10,10 +10,8 @@ export default async function handler(
   res: NextApiResponse<LogType[] | unknown>
 ) {
   try {
-    await db.connect()
-
-    // get payload from request
     const { limit = 10000, page = 1 } = req.body
+    await db.connect()
 
     let logs = await Logs.find(
       { balances: { $exists: true } },
