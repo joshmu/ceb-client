@@ -134,4 +134,5 @@ const logSchema = new Schema(
   { timestamps: true }
 )
 
-export default mongoose.models.Logs || mongoose.model('Logs', logSchema)
+export const Logs = mongoose.models.Logs || mongoose.model('Logs', logSchema)
+export default Logs

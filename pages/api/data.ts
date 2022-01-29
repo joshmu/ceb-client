@@ -12,10 +12,7 @@ export default function handler(
   db.connect()
     .then(() => {
       db.getTrimmedLogs().then(data => {
-        // todo: need a way to reduce memory usage in lambda, batch calls?
-        const logs = data.filter((log, idx) => idx % 2 === 0)
-
-        res.status(200).json(logs)
+        res.status(200).json(data as LogType[])
       })
     })
     .catch(e => {
