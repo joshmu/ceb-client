@@ -1,14 +1,56 @@
-import type { NextPage } from 'next'
+import type { NextPage, NextPageContext } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import useCebData from '../src/hooks/useCebData'
 import styles from '../styles/Home.module.css'
 import { Details } from '../src/components/details'
+import { LogType } from '../src/types/d'
 
-const Home: NextPage = () => {
-  const { data, error, isLoading } = useCebData()
+const dev = process.env.NODE_ENV !== 'production'
+let server = dev ? 'http://localhost:3000' : 'https://ceb-client.vercel.app'
 
-  if (isLoading) return <p>Loading...</p>
+export async function getServerSideProps(context: NextPageContext) {
+  const { req } = context
+  // * using 'x-forwarded-host' since lambda can run on a different port
+  if (req && !dev) server = `https://${req.headers['x-forwarded-host']}`
+
+  const props = {} as { logs: LogType[]; error: Error | unknown }
+
+  try {
+    // get num of pages required
+    const infoRes = await fetch(`${server}/api/info`)
+    const { pages, count } = await infoRes.json()
+    console.log('total records:', count)
+
+    // fire request per page to reduce lambda download size
+    const responses = await Promise.all(
+      Array(pages)
+        .fill(undefined)
+        .map(async (_, page: number) => {
+          return fetch(`${server}/api/page`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ page: page + 1, limit: 10000 }),
+          }).then(res => res.json())
+        })
+    )
+
+    // consolidate data
+    const data = responses.flat()
+    props.logs = data
+  } catch (err) {
+    console.error(err)
+    props.error = err
+  }
+
+  return {
+    props,
+  }
+}
+
+const Home: NextPage<{ logs: LogType[]; error?: Error | unknown }> = ({
+  logs,
+  error,
+}) => {
   if (error)
     return (
       <>
@@ -16,7 +58,6 @@ const Home: NextPage = () => {
         <pre>{JSON.stringify(error, null, 2)}</pre>
       </>
     )
-  // if (data) return <pre>{JSON.stringify(data, null, 2)}</pre>
 
   return (
     <div className={styles.container}>
@@ -31,7 +72,7 @@ const Home: NextPage = () => {
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
 
-        <Details logs={data} />
+        <Details logs={logs} />
 
         <p className={styles.description}>
           Get started by editing{' '}
