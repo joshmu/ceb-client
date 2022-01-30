@@ -9,6 +9,7 @@ import { IncomingMessage } from 'http'
 import { Errors } from '../src/components/Errors'
 import { Loading } from '../src/components/Loading'
 import { useAppContext } from '../src/context/globalContext'
+import { Signals } from '../src/components/Signals'
 
 export async function getServerSideProps(context: NextPageContext) {
   const { req } = context
@@ -54,6 +55,7 @@ const Home: NextPage = () => {
         </h1>
 
         <Details />
+        <Signals />
 
         <p className={styles.description}>
           Get started by editing{' '}

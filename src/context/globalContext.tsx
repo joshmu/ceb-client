@@ -7,6 +7,10 @@ interface AppContextInterface {
   totalRecords: number
   totalPages: number
   logs: LogType[]
+  wallet: [string, number][]
+  prices: [string, string][]
+  facts: [string, number][]
+  orders: LogType[]
   errors: Error[]
   isLoading: boolean
 }

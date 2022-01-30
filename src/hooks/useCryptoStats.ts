@@ -8,6 +8,7 @@ type StatsType = {
   wallet: [string, number][]
   prices: [string, string][]
   facts: [string, number][]
+  orders: LogType[]
 }
 
 export const useCryptoStats = ({ logs }: { logs: LogType[] }): StatsType => {
@@ -30,7 +31,7 @@ export const useCryptoStats = ({ logs }: { logs: LogType[] }): StatsType => {
       ['entries', logs.length],
     ]
 
-    setStats({ latest, wallet, prices, facts })
+    setStats({ latest, wallet, prices, facts, orders })
   }, [logs])
 
   return stats
