@@ -40,7 +40,7 @@ const SignalsHeader: FC = () => {
 }
 
 type SignalsPropType = {
-  signalsLimit: number
+  signalsLimit?: number
 }
 
 export const Signals: FC<SignalsPropType> = ({ signalsLimit = 500 }) => {
