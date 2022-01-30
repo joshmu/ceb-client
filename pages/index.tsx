@@ -6,7 +6,9 @@ import { Details } from '../src/components/details'
 import { InfoResponseType } from './api/info'
 import { getOriginServer } from '../src/utils/getOriginServer'
 import { IncomingMessage } from 'http'
-import { useCryptoLogs } from '../src/hooks/useCryptoLogs'
+import { Errors } from '../src/components/Errors'
+import { Loading } from '../src/components/Loading'
+import { useAppContext } from '../src/context/globalContext'
 
 export async function getServerSideProps(context: NextPageContext) {
   const { req } = context
@@ -31,27 +33,12 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 }
 
-const Home: NextPage<{
-  totalRecords: number
-  totalPages: number
-  error?: Error | unknown
-}> = ({ totalRecords, totalPages, error }) => {
-  const { logs, isLoading, errors } = useCryptoLogs({ totalPages })
+const Home: NextPage = () => {
+  const { errors, isLoading } = useAppContext()
 
-  if (errors?.length) {
-    return (
-      <>
-        <h1>ERROR!</h1>
-        {errors.map((err, idx) => (
-          <pre key={idx}>{JSON.stringify(error, null, 2)}</pre>
-        ))}
-      </>
-    )
-  }
+  if (errors?.length) return <Errors errors={errors} />
 
-  if (isLoading) {
-    return <h1>Loading...</h1>
-  }
+  if (isLoading) return <Loading />
 
   return (
     <div className={styles.container}>
@@ -66,7 +53,7 @@ const Home: NextPage<{
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
 
-        <Details logs={logs} />
+        <Details />
 
         <p className={styles.description}>
           Get started by editing{' '}

@@ -1,32 +1,10 @@
+import { useAppContext } from '../context/globalContext'
 import CryptoIcon from './cryptoIcon'
 
-export const Details = ({ logs }) => {
-  // parse the data
-  const tickerNames = ['btcusd', 'ethbtc', 'ethusd']
+export const Details = () => {
+  const { logs, wallet, prices, facts } = useAppContext()
 
-  const latest = logs[logs.length - 1]
-
-  // wallet
-  latest.balances.usd = latest.balances.usd < 1 ? '0.00' : latest.balances.usd
-  const wallet = Object.entries(latest.balances)
-
-  // prices
-  const prices = tickerNames.map(tn => [tn, latest[tn].ticker.mid])
-
-  // facts
-  const durationDays = +(
-    (latest.appTimestamp - logs[0].appTimestamp) /
-    1000 /
-    60 /
-    60 /
-    24
-  ).toFixed(1)
-  const orders = logs.filter(l => l.order)
-  const facts = [
-    ['days', durationDays],
-    ['trades', orders.length],
-    ['entries', logs.length],
-  ]
+  if (!logs) return null
 
   return (
     <div className='info'>

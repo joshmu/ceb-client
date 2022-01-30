@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { LogType } from '../types/d'
 
-export const useCryptoLogs = ({ totalPages }: { totalPages: number }) => {
+export const useFetchCryptoLogs = ({ totalPages }: { totalPages: number }) => {
   const [logs, setLogs] = useState<LogType[]>(null!)
-  const [isLoading, setIsLoading] = useState<Boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [errors, setErrors] = useState<Error[]>([])
 
   useEffect(() => {
