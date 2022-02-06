@@ -1,0 +1,18 @@
+{
+  "name": "dbupdater",
+  "version": "1.0.0",
+  "description": "update mongo db with gsheet db",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Josh Mu <hello@joshmu.dev> (https://joshmu.dev/)",
+  "license": "MIT",
+  "dependencies": {
+    "@types/google-spreadsheet": "^3.1.5",
+    "dotenv": "^16.0.0",
+    "google-spreadsheet": "^3.2.0",
+    "mongoose": "^6.2.0"
+  }
+}
