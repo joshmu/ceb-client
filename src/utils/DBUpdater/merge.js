@@ -74,7 +74,7 @@ function findClosest(timestamp) {
   const closest = gsheetData.reduce(
     (acc, cell) => {
       const diff = Math.abs(Number(cell.timestamp) - timestamp)
-      if (diff < acc.diff) {
+      if (diff < acc.diff && cell?.ethbtc) {
         return { diff, cell }
       }
       return acc
