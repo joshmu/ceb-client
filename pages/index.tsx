@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { Details } from '../src/components/details'
+import { TotalUSD } from '../src/components/TotalUSD'
 import { InfoResponseType } from './api/info'
 import { getOriginServer } from '../src/utils/getOriginServer'
 import { IncomingMessage } from 'http'
@@ -51,13 +52,12 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href='https://nextjs.org'>Next.js!</a>
+          <TotalUSD />
         </h1>
-
         <Details />
         <Signals />
 
-        <p className={styles.description}>
+        {/* <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
@@ -90,19 +90,15 @@ const Home: NextPage = () => {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
-        </div>
+        </div> */}
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
+        <a href='https://joshmu.dev' target='_blank' rel='noopener noreferrer'>
+          MU
+          {/* <span className={styles.logo}>
             <Image src='/vercel.svg' alt='Vercel Logo' width={72} height={16} />
-          </span>
+          </span> */}
         </a>
       </footer>
     </div>
