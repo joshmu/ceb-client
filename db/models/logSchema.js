@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-const Schema = mongoose.Schema
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
 // todo: need to create a user/client schema
 // deposits/ withdrawals
@@ -15,42 +15,42 @@ const Schema = mongoose.Schema
 // although could just collect user data and construct this on the fly
 const CLIENTS = [
   {
-    alias: 'squid',
+    alias: "squid",
     transactions: [
       {
-        type: 'deposit',
-        asset: 'btc',
+        type: "deposit",
+        asset: "btc",
         amount: 0.7641634,
-        date: '07/22/18',
+        date: "07/22/18",
         timestamp: 1532181600000,
       },
     ],
   },
   {
-    alias: 'paper',
+    alias: "paper",
     transactions: [
       {
-        type: 'deposit',
-        asset: 'btc',
+        type: "deposit",
+        asset: "btc",
         amount: 1.00217386,
-        date: '09/05/19 06:32:17',
+        date: "09/05/19 06:32:17",
         timestamp: 1567629137000,
       },
     ],
   },
   {
-    alias: 'carpet',
+    alias: "carpet",
     transactions: [
       {
-        type: 'deposit',
-        asset: 'btc',
+        type: "deposit",
+        asset: "btc",
         amount: 0.09313359,
-        date: '08/12/19 02:53:17',
+        date: "08/12/19 02:53:17",
         timestamp: 1565542397000,
       },
     ],
   },
-]
+];
 
 const logSchema = new Schema(
   {
@@ -63,8 +63,8 @@ const logSchema = new Schema(
     },
     btcusd: {
       signals: {
-        '5min': String,
-        '15min': String,
+        "5min": String,
+        "15min": String,
         hourly: String,
         daily: String,
         monthly: String,
@@ -82,8 +82,8 @@ const logSchema = new Schema(
     },
     ethbtc: {
       signals: {
-        '5min': String,
-        '15min': String,
+        "5min": String,
+        "15min": String,
         hourly: String,
         daily: String,
         monthly: String,
@@ -101,8 +101,8 @@ const logSchema = new Schema(
     },
     ethusd: {
       signals: {
-        '5min': String,
-        '15min': String,
+        "5min": String,
+        "15min": String,
         hourly: String,
         daily: String,
         monthly: String,
@@ -131,8 +131,8 @@ const logSchema = new Schema(
     notes: String,
     env: String,
   },
-  { timestamps: true }
-)
+  { timestamps: true },
+);
 
-export const Logs = mongoose.models.Logs || mongoose.model('Logs', logSchema)
-export default Logs
+export const Logs = mongoose.models.Logs || mongoose.model("Logs", logSchema);
+export default Logs;

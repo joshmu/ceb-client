@@ -1,7 +1,6 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useAppContext } from "../context/globalContext";
 import { AssetType, LogType, SignalsType, Ticker } from "../types/d";
-
 const TICKER_SYMBOLS: Ticker[] = ["btcusd", "ethbtc", "ethusd"];
 
 const Cell: FC<{ symbol: Ticker; signal: SignalsType }> = ({ symbol, signal }) => (
@@ -42,28 +41,60 @@ type SignalsPropType = {
   signalsLimit?: number;
 };
 
-export const Signals: FC<SignalsPropType> = ({ signalsLimit = 500 }) => {
-  const { logs } = useAppContext();
+export const SignalsChart: FC<SignalsPropType> = ({ signalsLimit = 500 }) => {
+  const { logs: rawLogs } = useAppContext();
 
-  if (!logs?.length) return null;
+  if (!rawLogs?.length) return null;
 
-  // get the last signalsLimit of the logs
-  const signals = logs.slice(logs.length - signalsLimit);
-  // sort from most recent to oldest
-  const reversedSignals = [...signals].reverse();
+  const logs = useMemo(() => {
+    // get the last signalsLimit of the logs
+    const signals = rawLogs.slice(rawLogs.length - signalsLimit);
+    // sort from most recent to oldest
+    const signalsRecentSort = [...signals].reverse();
+
+    return signalsRecentSort;
+  }, [rawLogs]);
+
+  const signals = useMemo(() => {
+    const labels: Ticker[] = ["btcusd", "ethbtc", "ethusd"];
+
+    return {
+      labels,
+      values: logs.map((log) =>
+        labels.map((label) => convertSignalToNumber(getSignal(label, log).daily)),
+      ),
+    };
+  }, [logs]);
+
+  const csvData = useMemo(() => {
+    return `
+    ${signals.labels.join(",")}\n
+    ${signals.values.map((row) => row.join(",")).join("\n")}
+      `;
+  }, [signals]);
+
+  console.log({ csvData });
+  if (!csvData) return null;
 
   return (
-    <div
-      className="container"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <SignalsHeader />
-      {reversedSignals.map((log, idx) => (
-        <SignalsRow key={idx} log={log} />
-      ))}
+    <div>
+      <pre>{csvData}</pre>
+      {/* <Line
+        data={csvData}
+        y='btcusd'
+        y2='ethbtc'
+        y3='ethbtc'
+        // colorVar='continent'
+        // highlightLabel='country'
+        highlight='red'
+        fillWeight={2}
+        roughness={4}
+        width='500'
+        height='300'
+        legend={false}
+        strokeWidth={3}
+        circle={false}
+      /> */}
     </div>
   );
 };
@@ -95,5 +126,22 @@ function calcSignalColor(signal: SignalsType): string {
       return "lightgrey";
     default:
       return "transparent";
+  }
+}
+
+function convertSignalToNumber(signal: string): number {
+  switch (signal) {
+    case "strong buy":
+      return 2;
+    case "buy":
+      return 1;
+    case "neutral":
+      return 0;
+    case "sell":
+      return -1;
+    case "strong sell":
+      return -1;
+    default:
+      return 0;
   }
 }

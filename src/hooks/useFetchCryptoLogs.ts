@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import { LogType } from '../types/d'
+import { useEffect, useState } from "react";
+import { LogType } from "../types/d";
 
 export const useFetchCryptoLogs = ({ totalPages }: { totalPages: number }) => {
-  const [logs, setLogs] = useState<LogType[]>(null!)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [errors, setErrors] = useState<Error[]>([])
+  const [logs, setLogs] = useState<LogType[]>(null!);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [errors, setErrors] = useState<Error[]>([]);
 
   useEffect(() => {
     // fire request per page to reduce lambda download size
@@ -13,18 +13,18 @@ export const useFetchCryptoLogs = ({ totalPages }: { totalPages: number }) => {
         .fill(undefined)
         .map(async (_, page: number) => {
           return fetch(`/api/page`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ page: page + 1, limit: 10000 }),
-          }).then(res => res.json())
-        })
+          }).then((res) => res.json());
+        }),
     )
-      .then(responses => {
-        setLogs(responses.flat())
+      .then((responses) => {
+        setLogs(responses.flat());
       })
-      .catch(err => setErrors(errors => [...errors, err]))
-      .finally(() => setIsLoading(false))
-  }, [])
+      .catch((err) => setErrors((errors) => [...errors, err]))
+      .finally(() => setIsLoading(false));
+  }, []);
 
-  return { logs, isLoading, errors }
-}
+  return { logs, isLoading, errors };
+};

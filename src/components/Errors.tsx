@@ -1,8 +1,8 @@
 // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/
 
 type PropsType = {
-  errors: Error[]
-}
+  errors: Error[];
+};
 
 export const Errors = ({ errors }: PropsType): JSX.Element => {
   return (
@@ -12,5 +12,5 @@ export const Errors = ({ errors }: PropsType): JSX.Element => {
         <pre key={idx}>{JSON.stringify(error, null, 2)}</pre>
       ))}
     </>
-  )
-}
+  );
+};
